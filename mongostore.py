@@ -17,6 +17,7 @@ def MongoStore(func):
     '''
     def mongologger(**kwargs):
         res=func(**kwargs)
+        call['_id']=str(datetime.datetime.now())+str(kwargs)
         call['result']=res
         call['parameters']=kwargs
         datastore.insert(call)
