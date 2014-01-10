@@ -7,8 +7,7 @@ from pymongo import MongoClient
 import datetime
 
 client = MongoClient()
-db = client['work']
-datastore = db['datastore']
+db = client['evaluation']
 
 def MongoStore(func):
     '''
@@ -20,9 +19,9 @@ def MongoStore(func):
         call['_id']=str(datetime.datetime.now())+str(kwargs)
         call['result']=res
         call['parameters']=kwargs
-        datastore.insert(call)
+        db[str(func.__name__)].insert(call)
         return res
-    call={'name':str(func.__name__),'timestamp':str(datetime.datetime.now())}
+    call={'timestamp':str(datetime.datetime.now())}
     
     return mongologger
     
